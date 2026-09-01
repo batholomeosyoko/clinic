@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: hcms-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hcms
+      POSTGRES_USER: hcms_user
+      POSTGRES_PASSWORD: hcms_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - hcms_pgdata:/var/lib/postgresql/data
+
+volumes:
+  hcms_pgdata:
+  
