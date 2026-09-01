@@ -4,13 +4,12 @@ services:
     container_name: hcms-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: hcms
-      POSTGRES_USER: hcms_user
-      POSTGRES_PASSWORD: hcms_pass
-      
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5433:5432"
+      - "${DB_PORT}:5432"
     volumes:
-      - hcms-pgdata:/var/lib/postgresql/data
+      - hcms_pgdata:/var/lib/postgresql/data
 volumes:
-  hcms-pgdata:
+  hcms_pgdata:
