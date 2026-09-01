@@ -1,0 +1,106 @@
+HCMS DEV API DOCUMENTATION
+
+User Management
+
+
+
+====> Create user
+Method: POST
+URL: http://localhost:8080/api/v1/users
+JSON: {
+  "email": "patient@example.com",
+  "password": "secure-password",
+  "role": "PATIENT"
+}
+
+RESPONSE: {
+  "id": 1,
+  "email": "patient@example.com",
+  "role": "PATIENT",
+  "enabled": true,
+  "createdAt": "2026-09-01T16:00:00Z"
+}
+
+
+======> Get all users
+Method: GET
+URL: http://localhost:8080/api/v1/users?page=0&size=20
+
+RESPONSE: {
+  "content": [
+    {
+      "id": 1,
+      "email": "patient@example.com",
+      "role": "PATIENT",
+      "enabled": true,
+      "createdAt": "2026-09-01T16:00:00Z"
+    }
+  ],
+  "totalElements": 1,
+  "totalPages": 1,
+  "size": 20,
+  "number": 0
+}
+
+
+=====> Get user by id
+Method: GET
+URL: http://localhost:8080/api/v1/users/:id
+
+RESPONSE: {
+  "id": 1,
+  "email": "patient@example.com",
+  "role": "PATIENT",
+  "enabled": true,
+  "createdAt": "2026-09-01T16:00:00Z"
+}
+
+
+=====> Update user by id
+Method: PUT
+URL: http://localhost:8080/api/v1/users/:id
+JSON: {
+  "email": "new-email@example.com",
+  "password": "new-secure-password",
+  "role": "RECEPTIONIST",
+  "enabled": true
+}
+
+You can send only the fields you want to update.
+
+
+=====> Delete user by id
+Method: DELETE
+URL: http://localhost:8080/api/v1/users/:id
+RESPONSE: 204 No Content
+
+
+User roles
+
+ADMIN
+DOCTOR
+RECEPTIONIST
+PATIENT
+
+
+Errors
+
+400 - Invalid request data
+404 - User not found
+409 - Email already exists
+
+
+Run application
+
+./mvnw spring-boot:run
+
+
+Database configuration
+
+DB_PORT default is 5433
+DB_NAME default is hcms
+DB_USER default is hcms_user
+DB_PASSWORD default is hcms_pass
+
+
+Authentication and JWT endpoints are not implemented yet.
