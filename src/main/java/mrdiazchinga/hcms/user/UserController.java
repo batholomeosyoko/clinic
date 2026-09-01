@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
+    private static final String DEFAULT_PAGE_NUMBER = "0";
+    private static final String DEFAULT_PAGE_SIZE = "20";
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -29,15 +32,15 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDto createUser(@Valid @RequestBody CreateUserDto dto) {
-        return UserResponseDto.from(userService.createUser(dto));
+    public UserResponseDto createUser(@Valid @RequestBody CreateUserDto createUserDto) {
+        return UserResponseDto.from(userService.createUser(createUserDto));
     }
 
     @GetMapping
     public Page<UserResponseDto> getUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        return userService.getUsers(page, size).map(UserResponseDto::from);
+            @RequestParam(defaultValue = DEFAULT_PAGE_NUMBER) int page,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int size) {
+        return userService.findUsers(page, size).map(UserResponseDto::from);
     }
 
     @GetMapping("/{id}")
@@ -46,8 +49,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserResponseDto updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserDto dto) {
-        return UserResponseDto.from(userService.updateUser(id, dto));
+    public UserResponseDto updateUserById(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateUserDto updateUserDto) {
+        return UserResponseDto.from(userService.updateUser(id, updateUserDto));
     }
 
     @DeleteMapping("/{id}")
