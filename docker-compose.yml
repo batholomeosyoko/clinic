@@ -7,11 +7,10 @@ services:
       POSTGRES_DB: hcms
       POSTGRES_USER: hcms_user
       POSTGRES_PASSWORD: hcms_pass
+      
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - hcms_pgdata:/var/lib/postgresql/data
-
+      - hcms-pgdata:/var/lib/postgresql/data
 volumes:
-  hcms_pgdata:
-  
+  hcms-pgdata:
